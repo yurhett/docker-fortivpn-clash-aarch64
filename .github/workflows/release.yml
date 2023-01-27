@@ -30,7 +30,7 @@ jobs:
         run: |
           docker login -u "$USERNAME" --password-stdin <<< "$PASSWORD"
           tag=$(date -u +%Y%m%d)
-          docker buildx build --platform="${{ steps.qemu.outputs.platforms }}" --push -t "$REGISTRY/$IMAGE_NAME:$tag" .
+          docker buildx build --platform="${{ steps.qemu.outputs.platforms }}" --push -t "docker-fortivpn-socks5-aarch64/$IMAGE_NAME:$tag" .
           rm -rf ~/.docker
           
           
