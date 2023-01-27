@@ -24,10 +24,15 @@ jobs:
 
       - name: Build and push
         env:
-          REGISTRY: ghcr.io
-          USERNAME: ${{ github.actor }}
-          PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
         run: |
-          docker login "$REGISTRY" -u "$USERNAME" --password-stdin <<< "$PASSWORD"
-          docker buildx build --platform="${{ steps.qemu.outputs.platforms }}" --push -t "$REGISTRY/$IMAGE_NAME:${{ github.ref_name }}" .
+          docker login -u "$USERNAME" --password-stdin <<< "$PASSWORD"
+          tag=$(date -u +%Y%m%d)
+          docker buildx build --platform="${{ steps.qemu.outputs.platforms }}" --push -t "$REGISTRY/$IMAGE_NAME:$tag" .
           rm -rf ~/.docker
+          
+          
+          
+          
+          
