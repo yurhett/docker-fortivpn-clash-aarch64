@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: tosainu/fortivpn-socks5
+      IMAGE_NAME: fortivpn-socks5
 
     steps:
       - uses: actions/checkout@v3.3.0
@@ -30,7 +30,7 @@ jobs:
         run: |
           docker login -u "$USERNAME" --password-stdin <<< "$PASSWORD"
           tag=$(date -u +%Y%m%d)
-          docker buildx build --platform="${{ steps.qemu.outputs.platforms }}" --push -t "docker-fortivpn-socks5-aarch64/$IMAGE_NAME:$tag" .
+          docker buildx build --platform="${{ steps.qemu.outputs.platforms }}" --push -t "yulonger/docker-fortivpn-socks5-aarch64:$tag" .
           rm -rf ~/.docker
           
           
