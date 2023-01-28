@@ -22,7 +22,7 @@ RUN \
   wget -O /config.yaml https://github.com/yurhett/docker-fortivpn-clash-aarch64/raw/master/config.yaml && \
   curl -sL https://github.com/Dreamacro/clash/archive/${CLASH_VERSION}.tar.gz \
     | tar xz -C /clashsrc --strip-components=1 && \
-  cd /clashsrc
+  cd /clashsrc \
   mkdir /clashbin
   
 COPY --from=tonistiigi/xx:golang / /
