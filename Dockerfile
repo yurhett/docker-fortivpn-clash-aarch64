@@ -29,12 +29,11 @@ RUN \
   
 COPY --from=tonistiigi/xx:golang / /
 ARG TARGETOS TARGETARCH TARGETVARIANT
-RUN --mount=target=/clashsrc \
+RUN --mount=target=. \
     --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
-    cd /clashsrc \
-    make BINDIR=/clashbin ${TARGETOS}-${TARGETARCH}${TARGETVARIANT} && \
-    mv /clashbin/clash* /clash
+    make BINDIR= ${TARGETOS}-${TARGETARCH}${TARGETVARIANT} && \
+    mv /clash* /clash
 
 # mkdir -p /go/src/github.com/nadoo/glider && \
 #   curl -sL https://github.com/nadoo/glider/archive/${GLIDER_VERSION}.tar.gz \
