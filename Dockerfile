@@ -19,12 +19,12 @@ RUN \
   mkdir -p /clashsrc && \
   cd / && \
   wget -O /Country.mmdb https://github.com/Dreamacro/maxmind-geoip/releases/latest/download/Country.mmdb && \
-  wget -O /config.yaml https://github.com/yurhett/docker-fortivpn-clash-aarch64/raw/master/config.yaml && \
+  wget -O /config.yaml https://github.com/yurhett/docker-fortivpn-clash-aarch64/raw/master/config.yaml
   
 WORKDIR /workdir
 RUN \
   curl -sL https://github.com/Dreamacro/clash/archive/${CLASH_VERSION}.tar.gz \
-    | tar xz -C . --strip-components=1 && \
+    | tar xz -C . --strip-components=1
 
   
 COPY --from=tonistiigi/xx:golang / /
