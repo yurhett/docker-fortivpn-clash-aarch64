@@ -26,7 +26,7 @@ ARG TARGETOS TARGETARCH TARGETVARIANT
 RUN --mount=target=. \
     --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
-    make && \
+    make BINDIR=/ && \
     mv /clash* /clash
 
 
