@@ -27,7 +27,7 @@ ARG TARGETOS TARGETARCH TARGETVARIANT
 RUN  curl -sL https://github.com/Dreamacro/clash/archive/${CLASH_VERSION}.tar.gz \
     | tar xz -C . --strip-components=1 && \
     make BINDIR= ${TARGETOS}-${TARGETARCH}${TARGETVARIANT} && \
-    mv ./clash* /clash
+    mv /clash* /clash
     
     
 # RUN --mount=target=. \
