@@ -22,18 +22,19 @@ RUN \
   wget -O /config.yaml https://github.com/yurhett/docker-fortivpn-clash-aarch64/raw/master/config.yaml
   
 WORKDIR /workdir
-RUN \
-  curl -sL https://github.com/Dreamacro/clash/archive/${CLASH_VERSION}.tar.gz \
-    | tar xz -C . --strip-components=1
-
-  
 COPY --from=tonistiigi/xx:golang / /
 ARG TARGETOS TARGETARCH TARGETVARIANT
-RUN --mount=target=. \
-    --mount=type=cache,target=/root/.cache/go-build \
-    --mount=type=cache,target=/go/pkg/mod \
+RUN  curl -sL https://github.com/Dreamacro/clash/archive/${CLASH_VERSION}.tar.gz \
+    | tar xz -C . --strip-components=1 && \
     make BINDIR= ${TARGETOS}-${TARGETARCH}${TARGETVARIANT} && \
-    mv /clash* /clash
+    mv ./clash* /clash
+    
+    
+# RUN --mount=target=. \
+#     --mount=type=cache,target=/root/.cache/go-build \
+#     --mount=type=cache,target=/go/pkg/mod \
+#     make BINDIR= ${TARGETOS}-${TARGETARCH}${TARGETVARIANT} && \
+#     mv /clash* /clash
 
 # mkdir -p /go/src/github.com/nadoo/glider && \
 #   curl -sL https://github.com/nadoo/glider/archive/${GLIDER_VERSION}.tar.gz \
