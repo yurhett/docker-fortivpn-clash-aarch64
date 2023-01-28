@@ -23,6 +23,7 @@ RUN \
   curl -sL https://github.com/Dreamacro/clash/archive/${CLASH_VERSION}.tar.gz \
     | tar xz -C /clashsrc --strip-components=1 && \
   cd /clashsrc
+  mkdir /clashbin
   
 COPY --from=tonistiigi/xx:golang / /
 ARG TARGETOS TARGETARCH TARGETVARIANT
@@ -30,9 +31,8 @@ RUN --mount=target=/clashsrc \
     --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
     cd /clashsrc \
-    ls \
-    make BINDIR= ${TARGETOS}-${TARGETARCH}${TARGETVARIANT} && \
-    mv /clashsrc/clash* /clash
+    make BINDIR=/clashbin ${TARGETOS}-${TARGETARCH}${TARGETVARIANT} && \
+    mv /clashbin/clash* /clash
 
 # mkdir -p /go/src/github.com/nadoo/glider && \
 #   curl -sL https://github.com/nadoo/glider/archive/${GLIDER_VERSION}.tar.gz \
