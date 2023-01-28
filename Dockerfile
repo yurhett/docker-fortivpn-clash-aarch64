@@ -19,7 +19,7 @@ RUN \
 
 RUN apk add --no-cache make git ca-certificates tzdata && \
     wget -O /Country.mmdb https://github.com/Dreamacro/maxmind-geoip/releases/latest/download/Country.mmdb && \
-    wget -O /config.yaml https://github.com/yurhett/docker-fortivpn-clash-aarch64/raw/master/config.yaml \
+    wget -O /config.yaml https://github.com/yurhett/docker-fortivpn-clash-aarch64/raw/master/config.yaml
 
 WORKDIR /workdir
 COPY --from=tonistiigi/xx:golang / /
