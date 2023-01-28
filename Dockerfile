@@ -26,7 +26,7 @@ RUN \
   
 COPY --from=tonistiigi/xx:golang / /
 ARG TARGETOS TARGETARCH TARGETVARIANT
-RUN --mount=target=. \
+RUN --mount=target=/clashsrc \
     --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
     make BINDIR= ${TARGETOS}-${TARGETARCH}${TARGETVARIANT} && \
