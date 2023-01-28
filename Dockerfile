@@ -21,8 +21,8 @@ RUN \
   wget -O /Country.mmdb https://github.com/Dreamacro/maxmind-geoip/releases/latest/download/Country.mmdb && \
   wget -O /config.yaml https://github.com/yurhett/docker-fortivpn-clash-aarch64/raw/master/config.yaml && \
   curl -sL https://github.com/Dreamacro/clash/archive/${CLASH_VERSION}.tar.gz \
-    | tar xz -C /clashsrc --strip-components=1
-  cd /clashsrc && \
+    | tar xz -C /clashsrc --strip-components=1 && \
+  cd /clashsrc
   
 COPY --from=tonistiigi/xx:golang / /
 ARG TARGETOS TARGETARCH TARGETVARIANT
@@ -51,7 +51,8 @@ COPY --from=builder /config.yaml /root/.config/clash/
 COPY --from=builder /clash /
 COPY --from=builder /usr/bin/openfortivpn /usr/bin/entrypoint.sh /usr/bin/
 ENTRYPOINT ["/usr/bin/entrypoint.sh"]
-EXPOSE 8443/tcp
+EXPOSE 7891/tcp
+EXPOSE 7891/udp
 CMD ["openfortivpn"]
 
 
