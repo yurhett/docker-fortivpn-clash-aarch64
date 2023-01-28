@@ -1,4 +1,4 @@
-# docker-fortivpn-socks5 
+# docker-fortivpn-clash
 
 Docker Hub: https://hub.docker.com/repository/docker/yulonger/docker-fortivpn-clash-aarch64
 
