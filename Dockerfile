@@ -2,7 +2,7 @@ FROM alpine:3.17.1 as builder
 
 ARG OPENFORTIVPN_VERSION=v1.17.3
 ARG GLIDER_VERSION=v0.16.2
-
+ARG CLASH_VERSION=v1.12.0
 RUN \
   apk add --no-cache \
     autoconf automake build-base ca-certificates curl git go openssl-dev ppp && \
@@ -16,17 +16,21 @@ RUN \
   make -j$(nproc) && \
   make install && \
   apk add --no-cache make git ca-certificates tzdata && \
+  mkdir -p /clashsrc && \
+  cd / && \
   wget -O /Country.mmdb https://github.com/Dreamacro/maxmind-geoip/releases/latest/download/Country.mmdb && \
-  wget -O /config.yaml https://github.com/yurhett/docker-fortivpn-clash-aarch64/raw/master/config.yaml
-
-WORKDIR /workdir
+  wget -O /config.yaml https://github.com/yurhett/docker-fortivpn-clash-aarch64/raw/master/config.yaml && \
+  curl -sL https://github.com/Dreamacro/clash/archive/${CLASH_VERSION}.tar.gz \
+    | tar xz -C /clashsrc --strip-components=1
+  cd /clashsrc && \
+  
 COPY --from=tonistiigi/xx:golang / /
 ARG TARGETOS TARGETARCH TARGETVARIANT
 RUN --mount=target=. \
     --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
     make BINDIR= ${TARGETOS}-${TARGETARCH}${TARGETVARIANT} && \
-    mv /clash* /clash
+    mv /clashsrc/clash* /clash
 
 # mkdir -p /go/src/github.com/nadoo/glider && \
 #   curl -sL https://github.com/nadoo/glider/archive/${GLIDER_VERSION}.tar.gz \
