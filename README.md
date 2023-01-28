@@ -1,10 +1,12 @@
-# docker-fortivpn-socks5 ![](https://https://github.com/Tosainu/docker-fortivpn-socks5/workflows/Build/badge.svg)
+# docker-fortivpn-socks5 
+
+Docker Hub: https://hub.docker.com/repository/docker/yulonger/docker-fortivpn-clash-aarch64
 
 Connect to a Fortinet SSL-VPN via http/socks5 proxy.
 
 ## Usage
 
-NOTE: I only tested this image on Linux-based systems. It might not be working on macOS.
+NOTE: I only tested this image on Linux-based systems.
 
 1. Create an openfortivpn configuration file.
 
@@ -22,19 +24,23 @@ NOTE: I only tested this image on Linux-based systems. It might not be working o
     $ docker container run \
         --cap-add=NET_ADMIN \
         --device=/dev/ppp \
-        --rm \
+        -p 7891:7891 \
         -v /path/to/config:/etc/openfortivpn/config:ro \
-        ghcr.io/tosainu/fortivpn-socks5:master
-    ```
-
-3. Now you can use SSL-VPN via `http://<container-ip>:8443` or `socks5://<container-ip>:8443`.
+        yulonger/docker-fortivpn-clash-aarch64:latest
 
     ```
-    $ http_proxy=http://172.17.0.2:8443 curl http://example.com
 
-    $ ssh -o ProxyCommand="nc -x 172.17.0.2:8443 %h %p" foo@example.com
+3. Now you can use SSL-VPN via `http://<host-ip>:7891` or `socks5://<host-ip>:7891`.
+
     ```
+    $ http_proxy=http://192.168.1.2:7891 curl http://example.com
+
+    $ ssh -o ProxyCommand="nc -x 192.168.1.2:7891 %h %p" foo@example.com
+    ```
+## Acknowledgement
+
+@[Tosainu](https://github.com/Tosainu)‘s  [docker-fortivpn-socks5](https://github.com/Tosainu/docker-fortivpn-socks5)
+@[Dreamacro](https://github.com/Dreamacro)'s [clash](https://github.com/Dreamacro/clash)
 
 ## License
-
-[MIT](https://github.com/Tosainu/docker-fortivpn-socks5/blob/master/LICENSE)
+MIT
