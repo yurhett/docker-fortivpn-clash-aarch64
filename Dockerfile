@@ -15,11 +15,9 @@ RUN \
   ./configure --prefix=/usr --sysconfdir=/etc && \
   make -j$(nproc) && \
   make install && \
-
-
-RUN apk add --no-cache make git ca-certificates tzdata && \
-    wget -O /Country.mmdb https://github.com/Dreamacro/maxmind-geoip/releases/latest/download/Country.mmdb \
-    wget -O /config.yaml https://github.com/yurhett/docker-fortivpn-clash-aarch64/raw/master/config.yaml
+  apk add --no-cache make git ca-certificates tzdata && \
+  wget -O /Country.mmdb https://github.com/Dreamacro/maxmind-geoip/releases/latest/download/Country.mmdb && \
+  wget -O /config.yaml https://github.com/yurhett/docker-fortivpn-clash-aarch64/raw/master/config.yaml
 
 WORKDIR /workdir
 COPY --from=tonistiigi/xx:golang / /
