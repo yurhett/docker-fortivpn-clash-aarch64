@@ -22,12 +22,13 @@ RUN \
   wget -O /config.yaml https://github.com/yurhett/docker-fortivpn-clash-aarch64/raw/master/config.yaml
   
 WORKDIR /workdir
+RUN mkdir /clashbin
 COPY --from=tonistiigi/xx:golang / /
 ARG TARGETOS TARGETARCH TARGETVARIANT
 RUN  curl -sL https://github.com/Dreamacro/clash/archive/${CLASH_VERSION}.tar.gz \
     | tar xz -C . --strip-components=1 && \
-    make BINDIR= ${TARGETOS}-${TARGETARCH}${TARGETVARIANT} && \
-    mv /clash* /clash
+    make BINDIR=/clashbin/ ${TARGETOS}-${TARGETARCH}${TARGETVARIANT} && \
+    mv /clashbin/clash* /clash
     
     
 # RUN --mount=target=. \
