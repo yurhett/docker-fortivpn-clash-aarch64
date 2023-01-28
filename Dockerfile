@@ -22,13 +22,11 @@ RUN \
 WORKDIR /workdir
 COPY --from=tonistiigi/xx:golang / /
 ARG TARGETOS TARGETARCH TARGETVARIANT
-
 RUN --mount=target=. \
     --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
-    make BINDIR=/ && \
+    make BINDIR= ${TARGETOS}-${TARGETARCH}${TARGETVARIANT} && \
     mv /clash* /clash
-
 
 # mkdir -p /go/src/github.com/nadoo/glider && \
 #   curl -sL https://github.com/nadoo/glider/archive/${GLIDER_VERSION}.tar.gz \
@@ -38,9 +36,7 @@ RUN --mount=target=. \
 #   mv feature.go.tmp feature.go && \
 #   go build -v -ldflags "-s -w"
 
-
 COPY entrypoint.sh /usr/bin/
-
 
 FROM alpine:3.17.1
 RUN apk add --no-cache ca-certificates openssl ppp
