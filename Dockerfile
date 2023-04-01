@@ -1,4 +1,4 @@
-FROM alpine:3.17.1 as builder
+FROM alpine:3.17.3 as builder
 
 ARG OPENFORTIVPN_VERSION=v1.17.3
 ARG GLIDER_VERSION=v0.16.2
@@ -47,7 +47,7 @@ RUN  curl -sL https://github.com/Dreamacro/clash/archive/${CLASH_VERSION}.tar.gz
 
 COPY entrypoint.sh /usr/bin/
 
-FROM alpine:3.17.1
+FROM alpine:3.17.3
 RUN apk add --no-cache ca-certificates openssl ppp
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
